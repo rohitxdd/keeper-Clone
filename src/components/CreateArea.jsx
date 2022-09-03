@@ -1,56 +1,83 @@
-import React, { useState } from "react";
-import AddIcon from '@mui/icons-material/Add';
-import Fab from '@mui/material/Fab';
-import Zoom from '@mui/material/Zoom';
-
-
+import React, { useState, useEffect } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+import Zoom from "@mui/material/Zoom";
 
 function CreateArea(props) {
   const [notes, setNotes] = useState({
     title: "",
-    content: ""
-  })
+    content: "",
+  });
 
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setNotes(prev => {
-      return ({
+    setNotes((prev) => {
+      return {
         ...prev,
-        [name]: value
-      })
-    })
+        [name]: value,
+      };
+    });
   }
 
   function handleAddClick(event) {
     event.preventDefault();
     if (notes.title === "" || notes.content === "") {
-      return
+      return;
     }
-    props.addnotesToList(notes)
+    props.addnotesToList(notes);
     setNotes({
       title: "",
-      content: ""
-    })
-    setChecked(false)
+      content: "",
+    });
+    setChecked(false);
   }
 
-  function handleCheck(){
-    setChecked(true)
+  function handleCheck() {
+    setChecked(true);
   }
+
+  useEffect(()=>{
+    const{title, content} = props.editMode;
+    setNotes(()=>{
+      setChecked(true)
+      return({
+        title:title,
+        content:content
+      })
+    })
+  },[props.editMode])
 
   return (
     <div>
       <form className="create-note">
-        {checked && <input name="title" value={notes.title} placeholder="Title" onChange={handleChange} />}
+        {checked && (
+          <input
+            name="title"
+            value={notes.title}
+            placeholder="Title"
+            onChange={handleChange}
+          />
+        )}
 
-        <textarea name="content" value={notes.content} placeholder="Take a note..." rows={checked?3:1} onChange={handleChange} onClick={handleCheck} />
+        <textarea
+          name="content"
+          value={notes.content}
+          placeholder="Take a note..."
+          rows={checked ? 3 : 1}
+          onChange={handleChange}
+          onClick={handleCheck}
+        />
 
-        <Zoom in={checked} style={{ transitionDelay: checked ? '500ms' : '0ms' }}>
-        <Fab onClick={handleAddClick}><AddIcon /></Fab>
+        <Zoom
+          in={checked}
+          style={{ transitionDelay: checked ? "500ms" : "0ms" }}
+        >
+          <Fab onClick={handleAddClick}>
+            <AddIcon />
+          </Fab>
         </Zoom>
-        
       </form>
     </div>
   );
