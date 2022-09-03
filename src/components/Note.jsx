@@ -1,10 +1,15 @@
 import React from "react";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 
 function Note(props) {
 
-  function handleClick(id){
+  function handleDeleteClick(id){
     props.deleteNote(id)
+  }
+
+  function handleEditClick(id){
+    props.editNote(id)
   }
 
   return (
@@ -12,8 +17,12 @@ function Note(props) {
       <h1>{props.title}</h1>
       <p>{props.content}</p>
       <button onClick={()=>{
-        handleClick(props.id)
+        handleDeleteClick(props.id)
       }}>< DeleteForeverIcon /></button>
+
+      <button onClick={()=>{
+        handleEditClick(props.id)
+      }}>< EditIcon /></button>
     </div>
   );
 }

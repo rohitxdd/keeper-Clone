@@ -27,6 +27,7 @@ function App() {
 
   function editNote(id){
     const {title, content} = notesList[id]
+    console.log(title, content)
     setNotesList((prev)=>prev.filter((e, i)=> i !== id))
   }
 
