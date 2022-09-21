@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
+import "./App.css";
 
-function App() {
+export default function App() {
   const[editData, setEditData] = useState({
     state:false,
   })
@@ -51,4 +52,3 @@ function App() {
   );
 }
 
-export default App;
