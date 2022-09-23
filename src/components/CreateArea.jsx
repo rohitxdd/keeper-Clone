@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
+import axios from "axios";
+
 
 export default function CreateArea(props) {
   const [notes, setNotes] = useState({
@@ -26,6 +28,11 @@ export default function CreateArea(props) {
     if (notes.title === "" || notes.content === "") {
       return;
     }
+    axios
+    .post("http://localhost:5000/", {
+      data: notes
+    }).catch(err=>console.log(err))
+
     props.addnotesToList(notes);
     setNotes({
       title: "",
